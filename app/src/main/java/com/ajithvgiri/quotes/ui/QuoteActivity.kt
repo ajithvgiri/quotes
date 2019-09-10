@@ -1,8 +1,7 @@
 package com.ajithvgiri.quotes.ui
 
-import androidx.appcompat.app.AppCompatActivity
-
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.ajithvgiri.quotes.R
 import com.ajithvgiri.quotes.viewmodel.QuoteViewModel
@@ -17,7 +16,6 @@ class QuoteActivity : AppCompatActivity() {
 
         // Initialization of ViewModel class
         val quoteViewModel = ViewModelProviders.of(this).get(QuoteViewModel::class.java)
-
 
         swipeRefreshLayout.setOnRefreshListener {
 

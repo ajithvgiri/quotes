@@ -1,13 +1,13 @@
 package com.ajithvgiri.quotes.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.ajithvgiri.quotes.model.Quote
 import com.ajithvgiri.quotes.network.ApiInterface
-import retrofit2.Retrofit
-import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 
@@ -34,6 +34,7 @@ class QuoteViewModel : ViewModel() {
 
             override fun onResponse(call: Call<List<Quote>>, response: Response<List<Quote>>) {
                 if (response.isSuccessful && response.body()?.isNotEmpty() == true) {
+                    // bind the response body to the "quotesList"
                     quotesList = response.body() as ArrayList<Quote>
                 }
             }
