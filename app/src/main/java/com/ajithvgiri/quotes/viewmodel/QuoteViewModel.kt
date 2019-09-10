@@ -1,6 +1,7 @@
 package com.ajithvgiri.quotes.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ajithvgiri.quotes.model.Quote
 import com.ajithvgiri.quotes.network.ApiInterface
@@ -18,27 +19,33 @@ class QuoteViewModel : ViewModel() {
         const val BASE_URL = "http://quotes.stormconsultancy.co.uk/"
     }
 
-    var quotesList = ArrayList<Quote>()
+
+    var quote = MutableLiveData<Quote>()
+
+    var retrofit: Retrofit
 
     init {
         // Initializing retrofit class with BASE_URL
-        val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(MoshiConverterFactory.create()).build()
+        retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(MoshiConverterFactory.create()).build()
 
-        val call = retrofit.create(ApiInterface::class.java).getQuotes()
 
-        call.enqueue(object : Callback<List<Quote>> {
+        getRandomQuotesFromServer()
+    }
 
-            override fun onFailure(call: Call<List<Quote>>, t: Throwable) {
+    fun getRandomQuotesFromServer() {
+        val call = retrofit.create(ApiInterface::class.java).getRandomQuotes()
+        call.enqueue(object : Callback<Quote> {
+            override fun onFailure(call: Call<Quote>, t: Throwable) {
                 Log.e(TAG, "onFailure at call.enqueue :-  ${t.message} ")
             }
 
-            override fun onResponse(call: Call<List<Quote>>, response: Response<List<Quote>>) {
-                if (response.isSuccessful && response.body()?.isNotEmpty() == true) {
-                    // bind the response body to the "quotesList"
-                    quotesList = response.body() as ArrayList<Quote>
+            override fun onResponse(call: Call<Quote>, response: Response<Quote>) {
+                // bind the response body to the "quotesList"
+                if (response.isSuccessful && response.body() != null) {
+                    quote.value = response.body()
                 }
             }
-
         })
     }
+
 }

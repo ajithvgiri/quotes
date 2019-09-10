@@ -10,4 +10,8 @@ interface ApiInterface {
     @GET("quotes.json")
     fun getQuotes(): Call<List<Quote>>
 
+
+    @GET("random.json")
+    fun getRandomQuotes(): Call<Quote>
+
 }

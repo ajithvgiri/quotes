@@ -2,11 +2,11 @@ package com.ajithvgiri.quotes.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ajithvgiri.quotes.R
 import com.ajithvgiri.quotes.viewmodel.QuoteViewModel
 import kotlinx.android.synthetic.main.activity_quote.*
-import kotlin.random.Random
 
 class QuoteActivity : AppCompatActivity() {
 
@@ -18,20 +18,20 @@ class QuoteActivity : AppCompatActivity() {
         val quoteViewModel = ViewModelProviders.of(this).get(QuoteViewModel::class.java)
 
         swipeRefreshLayout.setOnRefreshListener {
-
-            // generate a random number between 0 to 10
-            val random = Random.nextInt(quoteViewModel.quotesList.size) + 0
-
-            //get the quote list item from the "quoteList" initialized in "QuoteViewModel.kt" class
-            // and pass the random number to the index of the "quoteList"
-            val quoteModel = quoteViewModel.quotesList[random]
-
-            //bind the quote value from the "quoteModel" object to the textView
-            textViewQuote.text = quoteModel.quote
-
-            //set the isRefreshing value to false for not showing the progressbar in the UI
-            swipeRefreshLayout.isRefreshing = false
+            quoteViewModel.getRandomQuotesFromServer()
         }
+
+
+        // Observe the Quote Live data object for the changes
+        quoteViewModel.quote.observe(this, Observer {
+
+            if (it != null) {
+                //bind the quote value from the "quoteModel" object to the textView
+                textViewQuote.text = it.quote
+                //set the isRefreshing value to false for not showing the progressbar in the UI
+                swipeRefreshLayout.isRefreshing = false
+            }
+        })
 
     }
 }
