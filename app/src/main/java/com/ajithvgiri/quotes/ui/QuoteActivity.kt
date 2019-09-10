@@ -22,7 +22,7 @@ class QuoteActivity : AppCompatActivity() {
         swipeRefreshLayout.setOnRefreshListener {
 
             // generate a random number between 0 to 10
-            val random = Random.nextInt(10) + 0
+            val random = Random.nextInt(quoteViewModel.quotesList.size) + 0
 
             //get the quote list item from the "quoteList" initialized in "QuoteViewModel.kt" class
             // and pass the random number to the index of the "quoteList"

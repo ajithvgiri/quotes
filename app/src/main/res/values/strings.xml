@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Quotes</string>
+    <string name="swipe_to_get_a_quote">Swipe to get a Quote</string>
 </resources>

@@ -56,7 +56,6 @@ dependencies {
 
     // Network components
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
     implementation 'com.squareup.retrofit2:converter-moshi:2.6.1'
 
 }
