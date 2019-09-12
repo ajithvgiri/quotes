@@ -9,26 +9,21 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
 
-class QuoteViewModel : ViewModel() {
+class QuoteViewModel @Inject constructor(var retrofit: Retrofit) : ViewModel() {
+
 
     companion object {
         const val TAG = "QuotesViewModel"
-        const val BASE_URL = "http://quotes.stormconsultancy.co.uk/"
     }
 
 
     var quote = MutableLiveData<Quote>()
 
-    var retrofit: Retrofit
 
     init {
-        // Initializing retrofit class with BASE_URL
-        retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(MoshiConverterFactory.create()).build()
-
-
         getRandomQuotesFromServer()
     }
 
