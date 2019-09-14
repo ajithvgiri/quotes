@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class AppModules {
+class AppModule {
 
     @Provides
     fun providesString(): String = "Hello world!"
